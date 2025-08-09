@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: litellm-config
+data:
+  config.yaml: |
+    # Minimal LiteLLM config
+    general_settings:
+      telemetry: false
+      timeout: 120
+    model_list:
+      # Example alias to route to OpenRouter's GPT-4o-mini-like
+      - model_name: "gpt-4o-mini"
+        litellm_params:
+          model: "openrouter/openai/gpt-4o-mini"
+      # Example Claude 3.5
+      - model_name: "claude-3.5-sonnet"
+        litellm_params:
+          model: "openrouter/anthropic/claude-3.5-sonnet"
+      # Example Llama-3.1
+      - model_name: "llama-3.1-70b"
+        litellm_params:
+          model: "openrouter/meta-llama/llama-3.1-70b-instruct"
+
+    # You can add cost tracking & fallbacks later
