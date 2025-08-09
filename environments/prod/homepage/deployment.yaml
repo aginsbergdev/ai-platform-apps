@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homepage
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: homepage }
+  template:
+    metadata:
+      labels: { app: homepage }
+    spec:
+      containers:
+        - name: homepage
+          image: ghcr.io/gethomepage/homepage:latest
+          imagePullPolicy: Always
+          env:
+            - name: HOMEPAGE_ALLOWED_HOSTS
+              value: "mohctp.ai,localhost,127.0.0.1"
+            - name: HOMEPAGE_BASE_URL
+              value: "http://mohctp.ai"
+            - name: HOMEPAGE_DISABLE_CONFIG_COPIES
+              value: "true"
+            - name: NEXT_TELEMETRY_DISABLED
+              value: "1"
+          ports:
+            - containerPort: 3000
+          volumeMounts:
+            - name: config-dir
+              mountPath: /app/config
+            - name: cfg
+              mountPath: /app/config/settings.yaml
+              subPath: settings.yaml
+            - name: cfg
+              mountPath: /app/config/bookmarks.yaml
+              subPath: bookmarks.yaml
+            - name: cfg
+              mountPath: /app/config/services.yaml
+              subPath: services.yaml
+            - name: cfg
+              mountPath: /app/config/widgets.yaml
+              subPath: widgets.yaml
+            - name: cfg
+              mountPath: /app/config/docker.yaml
+              subPath: docker.yaml
+            - name: cfg
+              mountPath: /app/config/proxmox.yaml
+              subPath: proxmox.yaml
+            - name: cfg
+              mountPath: /app/config/kubernetes.yaml
+              subPath: kubernetes.yaml
+            - name: cfg
+              mountPath: /app/config/custom.js
+              subPath: custom.js
+            - name: cfg
+              mountPath: /app/config/custom.css
+              subPath: custom.css
+      volumes:
+        - name: config-dir
+          emptyDir: {}
+        - name: cfg
+          configMap:
+            name: homepage-config

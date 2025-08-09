@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+data:
+  settings.yaml: |
+    title: "Dashboard"
+    providers:
+      docker: false
+  bookmarks.yaml: |
+    - Developer:
+        - Github:
+            - abbr: GH
+              href: https://github.com/
+  services.yaml: |
+    []
+  widgets.yaml: |
+    - datetime:
+        format:
+          timeStyle: short
+          dateStyle: long
+  docker.yaml: |
+    []
+  proxmox.yaml: |
+    []
+  kubernetes.yaml: |
+    []
+  custom.js: |
+    // empty
+  custom.css: |
+    /* empty */
